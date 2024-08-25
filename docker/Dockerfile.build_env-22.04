@@ -11,4 +11,4 @@ RUN . /opt/cargo/env && rustup default stable
 RUN . /opt/cargo/env && cargo install --locked maturin
 ENV GIT_SSH_COMMAND="ssh -o StrictHostKeyChecking=no"
 RUN . /opt/cargo/env && rustup toolchain list
-RUN apt-get install -y zlib1g-dev zlib1g
+RUN apt-get install -y zlib1g-dev zlib1g libdeflate-dev
