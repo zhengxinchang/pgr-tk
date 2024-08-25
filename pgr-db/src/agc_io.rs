@@ -85,16 +85,16 @@ impl AGCFile {
             for i in 0..n_samples as usize {
                 let s_ptr = *(samples_ptr.add(i));
                 let sample_name = cstr_to_string(s_ptr);
-                //log::info!("sample: {}", sample_name);
+                // log::info!("sample: {}", sample_name);
                 let mut n_contig = agc_n_ctg(agc_handle.0, s_ptr);
                 let ctg_ptr = agc_list_ctg(agc_handle.0, s_ptr, &mut n_contig);
                 let mut ctgs: Vec<(String, usize)> = Vec::new();
                 for j in 0..n_contig as usize {
                     let c_ptr = *(ctg_ptr.add(j));
                     let ctg_name = cstr_to_string(c_ptr);
-                    //println!("ctg: {} {}", j, ctg_name);
                     let ctg_len = agc_get_ctg_len(agc_handle.0, s_ptr, c_ptr);
                     ctg_lens.push(((sample_name.clone(), ctg_name.clone()), ctg_len as usize));
+                    // println!("ctg: {} {} {} {}", j, sample_name, ctg_name, ctg_len);
                     sample_ctg.push((sample_name.clone(), ctg_name.clone()));
                     ctgs.push((ctg_name, ctg_len as usize));
                 }
@@ -298,6 +298,7 @@ impl<'a> Iterator for AGCFileIter<'a> {
                                     *end as i32,
                                     seq_buf,
                                 );
+
                                 seq = <Vec<u8>>::from_raw_parts(
                                     seq_buf as *mut u8,
                                     ctg_len - 1,
