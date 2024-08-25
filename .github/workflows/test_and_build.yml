@@ -18,9 +18,9 @@ jobs:
       with:
         submodules: recursive
     - name: setup
-      run: rustup default stable
+      run: /opt/cargo/bin/rustup default stable
     - name: Run tests
-      run: cargo test --verbose --workspace --exclude pgrtk
+      run: /opt/cargo/bin/cargo test --verbose --workspace --exclude pgrtk
     - name: Build
       run: bash build.sh
     - uses: actions/upload-artifact@v3
