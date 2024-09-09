@@ -14,11 +14,13 @@ RUN . /opt/cargo/env && cargo install --locked maturin
 ENV GIT_SSH_COMMAND="ssh -o StrictHostKeyChecking=no"
 RUN . /opt/cargo/env && rustup toolchain list
 RUN apt-get install -y zlib1g-dev zlib1g libdeflate-dev
-RUN rustup default stable
-RUN cargo build -p pgr-db --release
-RUN cargo build -p pgr-bin --release
-RUN cargo build -p pgr-bin --release
-RUN cd agc/ && make && cd ..
+RUN /opt/cargo/bin/rustup default stable
+RUN cd /software/pgr-tk/ && /opt/cargo/bin/cargo build -p pgr-db --release
+RUN cd /software/pgr-tk/ && /opt/cargo/bin/cargo build -p pgr-bin --release
+RUN cd /software/pgr-tk/agc/ && make || true
 RUN mkdir -p /software/bins/
+RUN ls /software/pgr-tk/pgr-bin/
+RUN ls /software/pgr-tk/target/
+RUN ls /software/pgr-tk/target/release/
 RUN cp /software/pgr-tk/target/release/pgr-* /software/bins/
 RUN cp /software/pgr-tk/agc/agc /software/bins/
